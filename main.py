@@ -1,9 +1,24 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 import sqlite3
 
 app = FastAPI()
+
+# allow frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# serve UI
+@app.get("/")
+def home():
+    return FileResponse("index.html")
+
 
 # -----------------------
 # STATIC FILES
